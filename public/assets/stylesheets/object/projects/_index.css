@@ -1,0 +1,13 @@
+/* 共通スタイルは外に書く */
+
+@media screen and (min-width: 1126px) { /* pc用スタイル */
+
+
+}
+
+/* tab用スタイルは自身で作成してください。 */
+
+@media screen and (max-width: 759px) { /* sp用スタイル */
+
+
+}
