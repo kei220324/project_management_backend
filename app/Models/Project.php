@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Project extends Model
 {
+    protected $fillable = [
+        'name',
+        'summary',
+        'due_date',
+    ];
+
     // JSONに含めたい計算結果（progress_percent / status）
     protected $appends = [
         'progress_percent',
@@ -62,4 +68,3 @@ class Project extends Model
         };
     }
 }
-
