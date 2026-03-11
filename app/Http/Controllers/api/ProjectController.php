@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreProjectRequest;
 
 class ProjectController extends Controller
 {
@@ -45,4 +46,15 @@ class ProjectController extends Controller
             'message' => 'project deleted',
         ]);
     }
+ public function store(StoreProjectRequest $request)
+{
+    $project = Project::create([
+        'name' => $request->name,
+        'summary' => $request->summary,
+        'due_date' => $request->due_date,
+    ]);
+
+    return response()->json($project, 201);
+}
+
 }
