@@ -57,4 +57,20 @@ class ProjectController extends Controller
     return response()->json($project, 201);
 }
 
+    public function update(StoreProjectRequest $request, Project $project)
+    {
+        $project->update([
+            'name' => $request->name,
+            'summary' => $request->summary,
+            'due_date' => $request->due_date,
+        ]);
+
+        return response()->json($project);
+    }
+
+
+
+
 }
+
+
