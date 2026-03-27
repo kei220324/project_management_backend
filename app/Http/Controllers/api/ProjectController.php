@@ -49,7 +49,7 @@ class ProjectController extends Controller
  public function store(StoreProjectRequest $request)
 {
     $project = Project::create([
-        'name' => $request->name,
+         'name' => $request->name,
         'summary' => $request->summary,
         'due_date' => $request->due_date,
     ]);
@@ -57,20 +57,21 @@ class ProjectController extends Controller
     return response()->json($project, 201);
 }
 
-    public function update(StoreProjectRequest $request, Project $project)
-    {
-        $project->update([
-            'name' => $request->name,
-            'summary' => $request->summary,
-            'due_date' => $request->due_date,
-        ]);
+public function update(StoreProjectRequest $request, Project $project)
+{
+    $project->update($request->validated());
 
-        return response()->json($project);
-    }
-
+    return response()->json($project);
+}
 
 
 
 }
+
+
+
+
+
+
 
 
