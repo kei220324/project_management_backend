@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +25,18 @@ Route::get('/projects/{project}', [ProjectController::class, 'show']);
 Route::delete('/projects/{project}', [ProjectController::class, 'destroy']);
 Route::post('/projects', [ProjectController::class, 'store']);
 Route::put('/projects/{project}', [ProjectController::class, 'update']);
+
+Route::post('/projects/{project}/tasks', [TaskController::class, 'store']);
+Route::patch('/tasks/{task}/toggle', [TaskController::class, 'toggle']);
+
+
+
+
+
+
+
+
+
+
+
+
