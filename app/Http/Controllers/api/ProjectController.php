@@ -22,40 +22,40 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        $project = Project::query()
-            ->select(['id', 'name', 'summary', 'due_date'])
-            ->withTaskStats()
-            ->with([
-                'tasks' => function ($query) {
-                    $query
-                        ->select(['id', 'project_id', 'name', 'is_done', 'due_date'])
-                        ->orderBy('due_date')
-                        ->orderBy('id');
-                },
-            ])
-            ->findOrFail($project->id);
-
+        $project->load([
+            'tasks' => function ($query) {
+                $query
+                    ->select(['id', 'project_id', 'name', 'is_done', 'due_date'])
+                    ->orderBy('due_date')
+                    ->orderBy('id');
+            },
+        ]);
+    
+        $project->loadCount([
+            'tasks',
+            'tasks as done_tasks_count' => function ($query) {
+                $query->where('is_done', true);
+            },
+        ]);
+    
         return response()->json($project);
     }
 
     public function destroy(Project $project)
     {
+       
         $project->delete();
 
         return response()->json([
             'message' => 'project deleted',
         ]);
     }
- public function store(StoreProjectRequest $request)
-{
-    $project = Project::create([
-         'name' => $request->name,
-        'summary' => $request->summary,
-        'due_date' => $request->due_date,
-    ]);
-
-    return response()->json($project, 201);
-}
+    public function store(StoreProjectRequest $request)
+    {
+        $project = Project::create($request->validated());
+    
+        return response()->json($project, 201);
+    }
 
 public function update(StoreProjectRequest $request, Project $project)
 {
