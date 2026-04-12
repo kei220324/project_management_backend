@@ -28,6 +28,8 @@ Route::put('/projects/{project}', [ProjectController::class, 'update']);
 
 Route::post('/projects/{project}/tasks', [TaskController::class, 'store']);
 Route::patch('/tasks/{task}/toggle', [TaskController::class, 'toggle']);
+Route::patch('/tasks/{task}', [TaskController::class, 'update']);
+
 
 
 
