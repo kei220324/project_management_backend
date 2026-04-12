@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
 use App\Http\Requests\StoreTaskRequest;
 use App\Models\Project;
 use App\Models\Task;
@@ -22,11 +22,9 @@ class TaskController extends Controller
      * Store a newly created resource in storage.
      */
 public function store(StoreTaskRequest $request, Project $project)
-{
-    $task = $project->tasks()->create([
-        'name' => $request->name,
-        'due_date' => $request->due_date,
-        'is_done' => 0
+{  $task = $project->tasks()->create([
+        ...$request->validated(),
+        'is_done' => false,
     ]);
 
     return response()->json($task, 201);
@@ -43,11 +41,12 @@ public function store(StoreTaskRequest $request, Project $project)
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreTaskRequest $request, Task $task)
     {
-        //
+       $task->update($request->validated());
+    
+        return response()->json($task);
     }
-
     /**
      * Remove the specified resource from storage.
      */
@@ -63,4 +62,5 @@ public function store(StoreTaskRequest $request, Project $project)
     
         return response()->json($task);
     }
+    
 }
