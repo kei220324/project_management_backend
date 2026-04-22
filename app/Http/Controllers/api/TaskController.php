@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Project;
 use App\Models\Task;
 
@@ -40,8 +41,7 @@ public function store(StoreTaskRequest $request, Project $project)
 
     /**
      * Update the specified resource in storage.
-     */
-    public function update(StoreTaskRequest $request, Task $task)
+     */public function update(UpdateTaskRequest $request, Task $task)
     {
        $task->update($request->validated());
     

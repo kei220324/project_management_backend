@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 
 class ProjectController extends Controller
 {
@@ -57,7 +58,7 @@ class ProjectController extends Controller
         return response()->json($project, 201);
     }
 
-public function update(StoreProjectRequest $request, Project $project)
+public function update(UpdateProjectRequest $request, Project $project)
 {
     $project->update($request->validated());
 
