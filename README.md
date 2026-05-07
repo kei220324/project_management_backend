@@ -55,7 +55,6 @@ JSON形式でデータを返却しています。
 | GET | `/api/tasks/{taskId}` | タスク詳細取得 |
 | POST | `/api/projects/{projectId}/tasks` | タスク作成 |
 | PUT | `/api/tasks/{taskId}` | タスク更新 |
-| DELETE | `/api/tasks/{taskId}` | タスク削除 |
 | PATCH | `/api/tasks/{taskId}/toggle` | タスク状態変更 |
 
 また、
