@@ -1,66 +1,194 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Project Management Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 概要
 
-## About Laravel
+プロジェクトおよびタスク管理機能を提供するバックエンドAPIです。  
+LaravelでREST APIを構築し、Reactフロントエンドと連携してデータの取得・更新を行います。
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 使用技術
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Laravel
+- PHP
+- MySQL
+- Eloquent ORM
+- REST API
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 主な機能
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- プロジェクト一覧取得
+- プロジェクト詳細取得
+- プロジェクト作成
+- プロジェクト更新
+- プロジェクト削除
+- タスク一覧取得
+- タスク作成
+- タスク更新
+- タスク削除
+- タスク完了 / 未完了切り替え
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## API設計
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Reactフロントエンドからのリクエストを受け取り、
+JSON形式でデータを返却しています。
 
-### Premium Partners
+### プロジェクト関連
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+| Method | Endpoint | 内容 |
+|---|---|---|
+| GET | `/api/projects` | プロジェクト一覧取得 |
+| GET | `/api/projects/{projectId}` | プロジェクト詳細取得 |
+| POST | `/api/projects` | プロジェクト作成 |
+| PUT | `/api/projects/{projectId}` | プロジェクト更新 |
+| DELETE | `/api/projects/{projectId}` | プロジェクト削除 |
 
-## Contributing
+### タスク関連
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Method | Endpoint | 内容 |
+|---|---|---|
+| GET | `/api/projects/{projectId}/tasks` | プロジェクトに紐づくタスク一覧取得 |
+| GET | `/api/tasks/{taskId}` | タスク詳細取得 |
+| POST | `/api/projects/{projectId}/tasks` | タスク作成 |
+| PUT | `/api/tasks/{taskId}` | タスク更新 |
+| DELETE | `/api/tasks/{taskId}` | タスク削除 |
+| PATCH | `/api/tasks/{taskId}/toggle` | タスク状態変更 |
 
-## Code of Conduct
+また、
+プロジェクトごとの
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- タスク総数
+- 完了済みタスク数
+- status判定
+- progress_percent
 
-## Security Vulnerabilities
+などもAPI側で管理しています。
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## Model設計
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Eloquent ORMを利用し、
+Project と Task のリレーションを定義しています。
+
+### Project Model
+
+- タスクとのリレーション管理
+- status算出
+- progress_percent算出
+- タスク集計処理
+- scopeによるクエリ共通化
+
+などを担当しています。
+
+### Task Model
+
+- タスク情報管理
+- 完了状態管理
+- プロジェクトとの関連付け
+
+を担当しています。
+
+---
+
+## 工夫した点
+
+### status を DB に持たず算出で管理
+
+status はタスクの状態によって変わるため、
+DBには保存せず Model 側で判定しています。
+
+DBに保存すると、
+タスク更新時に status 更新漏れが発生する可能性があるため、
+タスク状態から動的に判定する形にしました。
+
+---
+
+### withCount を利用した集計処理
+
+タスク総数や完了済みタスク数は、
+`withCount` を利用して取得しています。
+
+```php
+Project::withCount([
+    'tasks',
+    'tasks as done_tasks_count' => fn ($query) =>
+        $query->where('is_done', true),
+]);
+```
+
+最初はPHP側でタスク数を count していましたが、
+一覧表示時の処理量が増えやすかったため、
+withCount を利用してSQL側で集計するように改善しました。
+---
+### N+1問題を意識したデータ取得
+
+関連データ取得時には、
+N+1問題を避けることを意識しています。
+
+`withCount` や `loadCount` を利用し、
+必要なデータをまとめて取得するようにしました。
+
+---
+
+### フロントエンドとバックエンドの責務分離
+
+最初はフロント側で
+status 判定や集計処理を行っていました。
+
+ただ、
+ロジックが増えるにつれて
+フロント側の処理が複雑になってきたため、
+現在は Laravel 側で集計や status 判定を行っています。
+
+React 側は取得したデータを表示する役割に寄せ、
+責務を分けるようにしました。
+
+---
+
+## 苦労した点
+
+### データ取得と集計処理
+
+プロジェクト一覧取得時に、
+
+- タスク総数
+- 完了済みタスク数
+- status判定
+- progress_percent算出
+
+などを効率的に取得する必要がありました。
+
+最初はフロント側で集計や判定を行っていましたが、
+処理が分散し管理しづらくなっていました。
+
+そのため、
+
+- `withCount`
+- `scope`
+- Model側でのstatus算出
+
+などを利用し、
+責務を整理しながら改善しました。
+
+---
+
+## 今後の改善
+### Serviceクラスへのロジック分離
+
+現在の規模では問題ありませんが、
+機能追加で処理が増えるとControllerやModelが肥大化し、
+管理しづらくなると考えています。
+
+そのため今後はServiceクラスへ処理を分離し、
+役割を整理したいと考えています。
+
+### テストコード追加
+
+現在は手動確認中心のため、
+Feature Test や Unit Test を追加し、
+品質向上を進めたいと考えています。
