@@ -113,11 +113,12 @@ DBに保存すると、
 `withCount` を利用して取得しています。
 
 ```php
-Project::withCount([
-    'tasks',
-    'tasks as done_tasks_count' => fn ($query) =>
-        $query->where('is_done', true),
-]);
+$projectQuery
+    ->withCount('tasks')
+    ->withCount([
+        'tasks as done_tasks_count' => fn (Builder $taskQuery) =>
+            $taskQuery->where('is_done', true),
+    ]);
 ```
 
 最初はPHP側でタスク数を count していましたが、
