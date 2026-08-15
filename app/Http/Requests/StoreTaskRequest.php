@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreTaskRequest extends FormRequest
 {
@@ -21,8 +22,20 @@ class StoreTaskRequest extends FormRequest
      */
     public function rules(): array
     {
-     return [
+        return [
         'name' => ['required', 'string', 'max:255'],
-        'due_date' => ['nullable', 'date'],];
+        'due_date' => ['nullable', 'date'],
+        'status' => [
+            'required',
+            Rule::in([
+                'not_started',
+                'in_progress',
+                'in_review',
+                'completed',
+            ]),
+        ],
+    ];
     }
 }
+     
+
