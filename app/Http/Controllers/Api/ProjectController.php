@@ -26,7 +26,7 @@ class ProjectController extends Controller
         $project->load([
             'tasks' => function ($query) {
                 $query
-                    ->select(['id', 'project_id', 'name', 'is_done', 'due_date'])
+                    ->select(['id', 'project_id', 'name', 'is_done', 'due_date',"status"])
                     ->orderBy('due_date')
                     ->orderBy('id');
             },
