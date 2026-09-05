@@ -50,10 +50,8 @@ public function store(StoreTaskRequest $request, Project $project)
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
-    }
+
+    
     public function toggle(Task $task)
     {
         $task->update([
@@ -62,5 +60,7 @@ public function store(StoreTaskRequest $request, Project $project)
     
         return response()->json($task);
     }
+
+    
     
 }

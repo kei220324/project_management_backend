@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TaskController;
+use App\Http\Controllers\TaskCheckItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,14 @@ Route::put('/projects/{project}', [ProjectController::class, 'update']);
 Route::post('/projects/{project}/tasks', [TaskController::class, 'store']);
 Route::patch('/tasks/{task}/toggle', [TaskController::class, 'toggle']);
 Route::patch('/tasks/{task}', [TaskController::class, 'update']);
+Route::get('/tasks/{task}/check-items', [TaskCheckItemController::class, 'index']);
+Route::post('/tasks/{task}/check-items', [TaskCheckItemController::class, 'store']);
+Route::delete(
+    '/tasks/{task}/check-items/{checkItem}',
+    [TaskCheckItemController::class, 'destroy']
+);
+
+
 
 
 

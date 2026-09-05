@@ -15,7 +15,10 @@ class UpdateTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'name' => ['sometimes', 'required', 'string', 'max:255'],
+            'due_date' => ['sometimes', 'nullable', 'date'],
             'status' => [
+                'sometimes',
                 'required',
                 Rule::in([
                     'not_started',
