@@ -16,7 +16,15 @@ class UpdateTaskRequest extends FormRequest
     {
         return [
             'name' => ['sometimes', 'required', 'string', 'max:255'],
+
+            'description' => [
+                'sometimes',
+                'nullable',
+                'string',
+            ],
+
             'due_date' => ['sometimes', 'nullable', 'date'],
+
             'status' => [
                 'sometimes',
                 'required',
