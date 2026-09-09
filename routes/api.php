@@ -36,6 +36,7 @@ Route::delete(
     '/tasks/{task}/check-items/{checkItem}',
     [TaskCheckItemController::class, 'destroy']
 );
+Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
 
 
 

@@ -22,14 +22,17 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-public function store(StoreTaskRequest $request, Project $project)
-{  $task = $project->tasks()->create([
-        ...$request->validated(),
-        'is_done' => false,
-    ]);
-
-    return response()->json($task, 201);
-}
+    public function store(StoreTaskRequest $request, Project $project)
+    {
+        dd($request->all());
+    
+        $task = $project->tasks()->create([
+            ...$request->validated(),
+            'is_done' => false,
+        ]);
+    
+        return response()->json($task, 201);
+    }
 
     /**
      * Display the specified resource.
@@ -60,6 +63,15 @@ public function store(StoreTaskRequest $request, Project $project)
     
         return response()->json($task);
     }
+
+    public function destroy(Task $task)
+{
+    $task->delete();
+
+    return response()->json([
+        'message' => 'タスクを削除しました',
+    ]);
+}
 
     
     
