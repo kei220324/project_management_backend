@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Models\TaskCheckItem;
 use App\Http\Requests\StoreTaskCheckItemRequest;
+use App\Http\Requests\UpdateTaskCheckItemRequest;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -18,6 +19,19 @@ class TaskCheckItemController extends Controller
 
         return response()->json($checkItems);
     }
+
+    public function update(UpdateTaskCheckItemRequest $request, Task $task, TaskCheckItem $checkItem): JsonResponse
+    {
+  
+        if ($checkItem->task_id !== $task->id) {
+            return response()->json(['error' => 'Check item does not belong to the specified task.'], 400);
+        }
+
+        $checkItem->update($request->validated());
+
+        return response()->json($checkItem);
+    }
+
     public function store(
         StoreTaskCheckItemRequest $request,
         Task $task
