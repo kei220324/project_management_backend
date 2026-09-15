@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+
 use App\Models\Project;
 use App\Models\Task;
 
@@ -24,9 +25,7 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request, Project $project)
     {
-        dd($request->all());
-    
-        $task = $project->tasks()->create([
+       $task = $project->tasks()->create([
             ...$request->validated(),
             'is_done' => false,
         ]);
