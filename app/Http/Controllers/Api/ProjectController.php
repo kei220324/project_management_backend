@@ -28,7 +28,8 @@ class ProjectController extends Controller
                 $query
                     ->select(['id', 'project_id', 'name', 'is_done', 'due_date',"status","description"])
                     ->orderBy('due_date')
-                    ->orderBy('id');
+                    ->orderBy('id')
+                    ->withCheckItemStats();
             },
         ]);
     
